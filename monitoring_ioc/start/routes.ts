@@ -18,8 +18,9 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+import Route from '@ioc:Adonis/Core/Route';
 
-Route.get('/', async ({ view }) => {
-  return view.render('welcome')
-})
+Route.get('/', 'MonitoringController.getDashboard')
+Route.get('/modules/:id','MonitoringController.getOneModule')
+Route.get('/module-form', 'MonitoringController.getCreateModuleForm')
+Route.post('/form-create','MonitoringController.createModule')
