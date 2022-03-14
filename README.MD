@@ -15,7 +15,7 @@
 ### 1️⃣ Project recovery
 ------
 ```sh
-git@github.com:Simplon-hdf/webreathe_monitoring_ioc.git
+git@github.com:mocquaischristopher/webreathe_monitoring_ioc.git
 ```
 Enter the project folder : 
 ```sh
