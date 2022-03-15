@@ -101,8 +101,7 @@ localhost:3333
   ![Class diagram]( "Class diagram")
 
   * Sequence diagram:
-  ![Sequence diagram]( "Sequence diagram")
-  ![Sequence diagram]( "Sequence diagram")
+  ![Sequence diagram]( UML/sequencediagram_monitoring_ioc.png "Sequence diagram")
 
 
   8️⃣ The project is run 🆗 ⭐, good fun 👍 .
