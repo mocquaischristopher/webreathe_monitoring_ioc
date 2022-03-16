@@ -12,7 +12,7 @@ export default class Logs extends BaseSchema {
       .unsigned()
       .references('modules.id')
       .onDelete('CASCADE')
-      table.float('value')
+      table.float('value').nullable()
       table.boolean('state')
       table.timestamp('created_at', { useTz: true })
     })

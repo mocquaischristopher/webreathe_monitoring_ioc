@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, hasOne, HasOne, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
-import Details from './Detail'
-import Logs from './Log'
+import Detail from './Detail'
+import Log from './Log'
 
 export default class Module extends BaseModel {
   @column({ isPrimary: true })
@@ -17,17 +17,17 @@ export default class Module extends BaseModel {
   public location: string
 
   @column()
-  public value: number
+  public value: number | null
 
   @column()
   public state: boolean
 
-  @hasOne(()=>Details)
-  public type_name:HasOne<typeof Details>
+  @hasOne(()=>Detail)
+  public type_name:HasOne<typeof Detail>
 
-  @hasMany(()=>Logs)
-  public module_id:HasMany<typeof Logs>
+  @hasMany(()=>Log)
+  public module_id:HasMany<typeof Log>
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public created_at: DateTime
 }

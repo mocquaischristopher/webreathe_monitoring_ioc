@@ -9,7 +9,7 @@ export default class Modules extends BaseSchema {
       table.string('name')
       table.integer('type')
       table.string('location')
-      table.float('value')
+      table.float('value').nullable()
       table.boolean('state')
       table.timestamp('created_at', { useTz: true })
     })
