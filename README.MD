@@ -95,7 +95,7 @@ localhost:3333
 
   * Usecase diagram: 
   
-  ![Usecase diagram]( UML/UseCaseDiagram_monitoring_ioc.jpg "Usecase diagram")
+  ![Usecase diagram]( UML/UseCaseDiagram_monitoring_ioc.png "Usecase diagram")
 
   * Class diagram:
   ![Class diagram]( UML/ClassDiagram_monitoring_ioc.png "Class diagram")
