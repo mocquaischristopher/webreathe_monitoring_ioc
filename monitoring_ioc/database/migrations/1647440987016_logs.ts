@@ -1,4 +1,3 @@
-
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class Logs extends BaseSchema {

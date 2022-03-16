@@ -7,7 +7,10 @@ export default class Modules extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('name')
-      table.integer('type')
+      table
+      .integer('type')
+      .unsigned()
+      .references('details.id')
       table.string('location')
       table.float('value').nullable()
       table.boolean('state')
