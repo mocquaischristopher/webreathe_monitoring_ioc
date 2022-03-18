@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AdonisJS - A fully featured web framework for Node.js</title>
+  <title>Monitoring_ioc</title>
+  {{--  @entryPointScripts('app')  --}}
   <script src="{{ asset('assets/app.js') }}"></script>  
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/app.css') }}">   
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
@@ -12,10 +13,11 @@
 </head>
 <body class="overflow-hidden overflow-y-auto w-full">
   @!component('components/header')
-  @!section('body')
-  <script src="https://kit.fontawesome.com/86a7905f8d.js" crossorigin="anonymous"></script>
-  <div class="object-bottom">
+  @!component('components/flash')
+  <section class="flex flex-col h-full relative">
+    @!section('body')
     @!component('components/footer')
-  </div>
+  </section>
+  <script src="https://kit.fontawesome.com/86a7905f8d.js" crossorigin="anonymous"></script>
 </body>
 </html>

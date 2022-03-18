@@ -17,10 +17,10 @@ export default class Module extends BaseModel {
   public location: string
 
   @column()
-  public value: number | null
+  public current_value: number | null
 
   @column()
-  public state: boolean
+  public current_state: boolean
 
   @hasOne(()=>Detail)
   public type_name:HasOne<typeof Detail>

@@ -12,8 +12,8 @@ export default class Modules extends BaseSchema {
       .unsigned()
       .references('details.id')
       table.string('location')
-      table.float('value').nullable()
-      table.boolean('state')
+      table.float('current_value').nullable()
+      table.boolean('current_state')
       table.timestamp('created_at', { useTz: true })
     })
   }

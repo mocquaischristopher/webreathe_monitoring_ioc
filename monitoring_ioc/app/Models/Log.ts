@@ -9,11 +9,11 @@ export default class Log extends BaseModel {
   public module_id: number
 
   @column()
-  public value: number
+  public value: number | null
 
   @column()
   public state: boolean
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public updated_at: DateTime
 }

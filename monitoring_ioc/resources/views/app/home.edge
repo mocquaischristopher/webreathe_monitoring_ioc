@@ -1,0 +1,66 @@
+@layout('layouts/welcome')
+
+
+@section('body')
+<section class="text-center text-xl">
+    All Modules_ioc
+</section>
+<div class="flex flex-col mb-8">
+    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
+            <div class="overflow-hidden shadow-md sm:rounded-lg">
+                <table class="min-w-full">
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                Name
+                            </th>
+                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                Current value
+                            </th>
+                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                Uptime
+                            </th>
+                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                Sent data
+                            </th>
+                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                State
+                            </th>
+                            <th scope="col" class="relative py-3 px-6">
+                                Graph
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @each(module in modules)
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <a href="{{route ('modules.show', {id: module.id}) }}" class="text-blue-600 dark:text-blue-500 hover:underline">{{module.name}}</a>
+                                </td>
+                                <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                    {{module.current_value}}
+                                </td>
+                                <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                    {{module.updated_at}}
+                                </td>
+                                <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                    ?
+                                </td>
+                                <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{module.current_state? 'bg-green-800 text-white': 'bg-red-500 text-white'}}"> {{module.current_state? 'Online':'Offline'}} </span>
+                                </td>
+                                <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
+                                    ?
+                                </td>
+                            </tr>
+                        @end
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+@end

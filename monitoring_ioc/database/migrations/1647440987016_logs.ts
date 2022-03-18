@@ -13,7 +13,7 @@ export default class Logs extends BaseSchema {
       .onDelete('CASCADE')
       table.float('value').nullable()
       table.boolean('state')
-      table.timestamp('created_at', { useTz: true })
+      table.timestamp('updated_at', { useTz: true })
     })
   }
 

@@ -1,0 +1,132 @@
+@layout('layouts/welcome')
+
+
+@section('body')
+<section class="flex flex-col min-h-full">
+<section class="flex">
+    <h1>{{module.name}} </h1>
+    {{--  <a href="/changeState">change state</a>  --}}
+    {{--  @!component('components/button', {
+        href:"{{route ('modules.update', {id: module.id}) }}",
+        text:"prout"
+    })  --}}
+        
+    {{--  @!component('components/button', {
+        // href:"",
+        href:"{{route ('module.delete') }}",
+        text:"Delete Module"
+    })  --}}
+    <form action="/modules/{{module.id}}/changeState" method="post">
+        @if(module.current_state)
+            <button type="submit" class="bg-indigo-500">Deactivate Module</button>
+        @else            
+            <button type="submit" class="bg-indigo-500">Activate Module</button>
+        @end
+    </form>
+    <form action="/modules/{{module.id}}/deleteModule" method="post">
+        <button type="submit" class="bg-red-500">Delete Module</button>
+    </form>
+
+    {{--  <a href="{{route ('modules.destroy', {id: module.id}) }}">delete</a>  --}}
+    {{--  <a href="{{route ('module.delete') }}" type="button" class="bg-indigo-500 font-bold p-2 uppercase text-xs rounded shadow hover:shadow-md outline-none shadow-black shadow-md focus:outline-none mr-3 mb-2.5 ease-linear transition-all duration-150">delete module</a>  --}}
+    {{--  <button type="button" class="bg-indigo-500" onClick={{"()=>console.log('toto')"}}>test</button>  --}}
+    
+</section>
+<div class="flex flex-col">
+    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
+    <div class="overflow-hidden shadow-md sm:rounded-lg">
+    <table class="min-w-full">
+    <thead class="bg-gray-50 dark:bg-gray-700">
+    <tr>
+    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+    Name
+    </th>
+    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+    Type
+    </th>
+    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+    Location
+    </th>
+    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+    Current_value
+    </th>
+    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+        Current_state
+    </th>
+    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+        Created_at
+    </th>
+    </tr>
+    </thead>
+    <tbody>
+    
+    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+    <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        {{module.name}}
+    </td>
+    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+        {{module.type}}
+    </td>
+    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+        {{module.location}}
+
+    </td>
+    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+        {{module.current_value}}
+
+    </td>
+    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{module.current_state? 'bg-green-800 text-white': 'bg-red-500 text-white'}}"> {{module.current_state? 'Online':'Offline'}} </span>
+    </td>
+</td>
+<td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+    {{module.created_at}}
+</td>
+
+    </tr>
+    
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <section>
+        <table class="min-w-full">
+            <thead class="bg-gray-50 dark:bg-gray-700">
+                <tr>
+                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                        Value
+                    </th>
+                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                        State
+                    </th>
+                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                        Updated_at
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(log in logs)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{log.value}}   
+                        </td>
+                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{log.state? 'bg-green-800 text-white': 'bg-red-500 text-white'}}"> {{log.state? 'Online':'Offline'}} </span>
+                        </td>
+                        <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                            {{log.updated_at}}
+                        </td>
+                    </tr>
+                @end
+                
+            </tbody>
+        </table>
+            
+    </section>
+</section>
+@end

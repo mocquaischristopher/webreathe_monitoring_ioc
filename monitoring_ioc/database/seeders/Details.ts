@@ -1,20 +1,20 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Detail from 'App/Models/Detail'
 
-export default class DetailSeeder extends BaseSeeder {
+export default class DetailsSeeder extends BaseSeeder {
   public async run () {
     
     await Detail.createMany([
       {
-        type_name: "Température",
+        type_name: "Temperature",
         unit: " °C"
       },
       {
-        type_name: "Comptage",
-        unit: " personnes"
+        type_name: "Counter",
+        unit: " persons"
       },
       {
-        type_name: "Vitesse",
+        type_name: "Speed",
         unit: " km/h"
       }
     ])
