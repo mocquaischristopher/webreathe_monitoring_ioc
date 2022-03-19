@@ -15,6 +15,7 @@ export default class Modules extends BaseSchema {
       table.float('current_value').nullable()
       table.boolean('current_state')
       table.timestamp('created_at', { useTz: true })
+      table.timestamp('active').nullable()
     })
   }
 

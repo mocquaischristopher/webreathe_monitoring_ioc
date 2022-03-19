@@ -1,5 +1,6 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Module from 'App/Models/Module'
+import { DateTime } from 'luxon'
 
 export default class ModulesSeeder extends BaseSeeder {
   public async run () {
@@ -11,6 +12,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Bus 1",
         current_value: null,
         current_state: false,
+        active: undefined,
       },
       {
         name: "MT-2x",
@@ -18,6 +20,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Bus 2",
         current_value: 25,
         current_state: true,
+        active: DateTime.now(),
       },
       {
         name: "MT-3x",
@@ -25,6 +28,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Bus 3",
         current_value: 25,
         current_state: true,
+        active: DateTime.now(),
       },
       {
         name: "MT-4x",
@@ -32,6 +36,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Tram 1",
         current_value: 14.8,
         current_state: true,
+        active: DateTime.now(),
       },
       {
         name: "MT-5x",
@@ -39,6 +44,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Tram 2",
         current_value: null,
         current_state: false,
+        active: undefined,
       },
       {
         name: "MC-1x",
@@ -46,6 +52,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Bus 1",
         current_value: 25,
         current_state: true,
+        active: DateTime.now(),
       },
       {
         name: "MC-2x",
@@ -53,6 +60,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Bus 2",
         current_value: null,
         current_state: false,
+        active: undefined,
       },
       {
         name: "MC-3x",
@@ -60,6 +68,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Bus 3",
         current_value: 25,
         current_state: true,
+        active: DateTime.now(),
       },
       {
         name: "MC-4x",
@@ -67,6 +76,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Tram 1",
         current_value: null,
         current_state: false,
+        active: undefined,
       },
       {
         name: "MC-5x",
@@ -74,6 +84,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Tram 2",
         current_value: 14,
         current_state: true,
+        active: DateTime.now(),
       },
       {
         name: "MV-1x",
@@ -81,6 +92,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Bus 1",
         current_value: 45.7,
         current_state: true,
+        active: DateTime.now(),
       },
       {
         name: "MV-2x",
@@ -88,6 +100,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Bus 2",
         current_value: 25,
         current_state: true,
+        active: DateTime.now(),
       },
       {
         name: "MV-3x",
@@ -95,6 +108,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Bus 3",
         current_value: null,
         current_state: false,
+        active: undefined,
       },
       {
         name: "MV-4x",
@@ -102,6 +116,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Tram 1",
         current_value: 5.7,
         current_state: true,
+        active: DateTime.now(),
       },
       {
         name: "MV-5x",
@@ -109,6 +124,7 @@ export default class ModulesSeeder extends BaseSeeder {
         location: "Tram 2",
         current_value: null,
         current_state: false,
+        active: undefined,
       },
     ]) 
   }

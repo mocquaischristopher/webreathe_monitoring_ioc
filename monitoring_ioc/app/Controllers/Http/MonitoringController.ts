@@ -9,38 +9,20 @@ export default class MonitoringController {
 
 
     dashboard = async ({ view }: HttpContextContract) => {
-        let modulesList = await (Database.from('modules').select('*').orderBy('created_at', 'asc'))
-        // let updateTime = await (Database)
-        // let nbValue = await (Database.from('logs').select('*').groupBy('value')) module_id = 5
-        let modules = await Database.from('modules').where('id', 5).with('toto', (query) => {
-            query.from('logs').select('*').where('module_id', 5)}).select('*').from('toto')
-        // let modulesList = await (Database
-        //     .from('modules')
-        //     // .select('*')
-            
-        //     .join('logs', 'modules.id', '=', 'logs.module_id')
-        //     .select('modules.*')
-        //     .select('logs.value')
-        //     .select('logs.state')
-        //     .select('logs.updated_at')
-        // )
-        // let modulesList = await (Database
-        //     .from('modules')
-        //     .where('modules_id', Database
-        //         .raw(`select "user_id" from "users" where "users"."user_id" = ?`, [1])
-        //         .wrap('(', ')')
-        //     )
-        // )
-            console.log(modules)
+        let modulesList = await (Database.from('modules').select('*').orderBy('id', 'asc')) 
+        let uptimeList = await (Database.from('modules').select('id', 'active').orderBy('id', 'asc')) 
+        let logsList = await (Database.from('logs').select('module_id', 'value', 'updated_at').whereNotNull('value').orderBy('module_id', 'asc'))
+        console.log(logsList)
+        let nbValue = await (Database.from('logs').select('module_id').count('value').groupBy('module_id').orderBy('module_id', 'asc')) 
         const typeArray = await Detail.all()
-        return view.render('app/home', {modules: modulesList, type: typeArray})
+        return view.render('app/home', {modules: modulesList, type: typeArray, nbValue: nbValue, uptimeList:getUptimeList(uptimeList), logsList:logsList})
     }
 
     oneModule= async ({params, view}:HttpContextContract)=>{
         const module = await Module.findOrFail(params.id)
         const logs = await (Database
             .from('logs')
-            .where('module_id', module.id)
+            .where('module_id', module.id).orderBy('updated_at', 'desc')
             )
         const type = await (Database
             .from('details')
@@ -57,7 +39,6 @@ export default class MonitoringController {
 
     createModuleForm=async({view}:HttpContextContract)=>{
         let typeArray = await Database.from('details').select('*')
-        // let typeArray = await Database.from(Detail.table).select('*')
         return view.render('app/createModuleForm', {types:typeArray})
     }
 
@@ -72,7 +53,8 @@ export default class MonitoringController {
             location: newModule.location,
             current_state: newModule.state?true:false,
             current_value: newModule.state?randomValue:null,
-            created_at: DateTime.now()
+            created_at: DateTime.now(),
+            active: DateTime.now()
         }).returning("id")
         await Database
         .table('logs')
@@ -95,7 +77,8 @@ export default class MonitoringController {
             .where('id', module.id)
             .update({
                 current_state: !module.current_state,
-                current_value: !module.current_state?randomValue:null
+                current_value: !module.current_state?randomValue:null,
+                active: !module.current_state?DateTime.now():undefined
             })
         await Database
             .table('logs')
@@ -120,21 +103,9 @@ export default class MonitoringController {
 
 
 }
-// function formatDate(date: Date) {
-//     const d = new Date(date);
-//     const day = d.getUTCDate();
-//     const month = d.getUTCMonth() + 1;
-//     const year = d.getUTCFullYear();
 
-//     // console.log(day, month, year);
-//     // console.log(d.toLocaleDateString("fr-FR"));
-//     return d.toLocaleDateString("fr-FR");
-// }
-
-// function random(min, max) {
 function random(type:number) {
     let value = 0.0;
-    // return Math.floor(Math.random() * (max - min + 1) + min);
     switch(type) {
         case 1:
             value = randNb(-10, 50);
@@ -149,6 +120,33 @@ function random(type:number) {
     return value;
 }
 function randNb(min, max) {
-    // return Math.floor(Math.random() * (max - min + 1) + min);
     return (Math.random() * (max - min + 1) + min).toFixed(1);
+}
+
+function getUptime(startDate: Date) {
+    const uptime = Date.now()-startDate.getTime();
+    return uptime;
+}
+
+function getUptimeList(startDateList: []) {
+    const uptimeList = [];
+    for (const k of startDateList) {
+        uptimeList.push({
+            id:k.id,
+            active:k.active != null?msToTime(getUptime(k.active)):'not active'
+        })
+    }
+    return uptimeList;
+}
+
+function msToTime(duration) {
+    var seconds = parseInt((duration/1000)%60)
+        , minutes = parseInt((duration/(1000*60))%60)
+        , hours = parseInt((duration/(1000*60*60))%24);
+    
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+    
+    return hours + " heures " + minutes + " minutes " + seconds + " secondes ";
 }

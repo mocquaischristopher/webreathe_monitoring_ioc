@@ -24,10 +24,13 @@ export default class Module extends BaseModel {
 
   @hasOne(()=>Detail)
   public type_name:HasOne<typeof Detail>
-
+  
   @hasMany(()=>Log)
   public module_id:HasMany<typeof Log>
+  
+  @column.dateTime()
+  public active: DateTime
 
   @column.dateTime({ autoCreate: true })
-  public created_at: DateTime
+  public created_at: DateTime | null
 }
