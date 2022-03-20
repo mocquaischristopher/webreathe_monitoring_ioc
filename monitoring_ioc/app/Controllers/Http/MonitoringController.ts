@@ -99,8 +99,6 @@ export default class MonitoringController {
         session.flash({success: "The module has been deleted"})
         response.redirect().toRoute('home')
     }
-
-
 }
 
 function random(type:number) {
