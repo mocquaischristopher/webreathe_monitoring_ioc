@@ -95,13 +95,13 @@ localhost:3333
 
   * Usecase diagram: 
   
-  ![Usecase diagram]( UML/UseCaseDiagram_monitoring_ioc.png "Usecase diagram")
+  ![Usecase diagram]( docs/UML/UseCaseDiagram_monitoring_ioc.png "Usecase diagram")
 
   * Class diagram:
-  ![Class diagram]( UML/ClassDiagram_monitoring_ioc.png "Class diagram")
+  ![Class diagram]( docs/UML/ClassDiagram_monitoring_ioc.png "Class diagram")
 
   * Sequence diagram:
-  ![Sequence diagram]( UML/sequencediagram_monitoring_ioc.png "Sequence diagram")
+  ![Sequence diagram]( docs/UML/sequencediagram_monitoring_ioc.png "Sequence diagram")
 
 
   8️⃣ The project is run 🆗 ⭐, good fun 👍 .
