@@ -10,6 +10,9 @@
 */
 
 import Server from '@ioc:Adonis/Core/Server'
+import dataRandom from '../automatic_script/dataRandom'
+dataRandom()
+
 
 /*
 |--------------------------------------------------------------------------

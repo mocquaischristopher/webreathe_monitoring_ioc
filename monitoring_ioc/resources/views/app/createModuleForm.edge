@@ -1,0 +1,76 @@
+@layout('layouts/welcome')
+
+
+@section('body')
+
+<section class="text-center py-4">
+  Create Module
+</section>
+
+<section class="px-8 py-4 min-w-full">
+  <form action="/form-create" method="post" 
+    class="bg-gray-50 dark:bg-gray-700 overflow-hidden shadow-md sm:rounded-lg">
+    <section class="form-group mb-6 pt-6">
+      <input 
+        type="text" 
+        class="form-control block w-3/4 mx-auto px-3 py-1.5 text-base font-normal 
+        text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 
+        rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white 
+        focus:border-blue-600 focus:outline-none" 
+        name="name" 
+        id="exampleInput7"
+        placeholder="Name of module">
+    </section>
+    <section class="form-group mb-6">
+      <select class="form-select block w-3/4 mx-auto px-3 py-1.5
+        text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat
+        border border-solid border-gray-300 rounded transition ease-in-out m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+        name="type" aria-label="Default select example">
+        <option selected>Selected one type</option>
+          @each(type in types)
+            <option value="{{type.id}}">{{type.type_name}}</option>
+          @end
+      </select>      
+    </section>
+    <section class="form-group mb-6">
+      <input type="text" class="form-control block w-3/4 mx-auto px-3 py-1.5
+        text-base font-normal text-gray-700 bg-white bg-clip-padding
+        border border-solid border-gray-300 rounded transition ease-in-out m-0
+        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
+        name="location" id="location"
+        placeholder="Location">
+    </section>
+    <section class="form-group form-check text-center mb-6">
+      <input type="checkbox"
+        class="form-check-input appearance-none h-4 w-4 border border-black 
+        rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 
+        focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat 
+        bg-center bg-contain mr-2 cursor-pointer"
+        name="state" id="state" checked>
+      <label id="label-checkbox" class="form-check-label inline-block text-white" for="state">
+      </label>
+    </section>
+    <section class="text-center pb-6">
+      <button type="submit" class="w-60 px-6 py-2.5 bg-blue-600 text-white 
+        font-medium text-xs uppercase rounded shadow-md hover:bg-blue-700 
+        hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none 
+        focus:ring-0 transition duration-150 ease-in-out">
+          Add new Module
+      </button>
+    </section>
+  </form>
+</section>
+
+<script>
+  window.onchange = () => {
+    const checkedState = document.getElementById('state').checked;
+    const labelChecked = document.getElementById('label-checkbox');
+    if(checkedState) {
+        labelChecked.innerHTML = 'Module  will be active';
+    } else {
+        labelChecked.innerHTML = 'Module  will not be active';
+    }
+}
+</script>
+@end

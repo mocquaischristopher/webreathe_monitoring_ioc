@@ -3,12 +3,10 @@
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> You are a junior developer in the IT department of a banking brand called Bank Root.
-> The main target of this bank was until now to offer banking services on site.
-> It now wishes to diversify its clientele, enter fully into the digital era (kek …) and (FINALLY) offer its users a renewed online banking service in order to 
-> attract new users and modernize its offer.
-> The mission of your team is to design an application that allows your employer to manage their bank accounts online first and then to offer banking management 
-> services to your customers (deposits, transfers, etc.) .
+> You have just applied for a company specializing in automated counting in public transport. 
+> You are put to a test to set yourself apart from other applicants.
+> For several years, objects connected to the Internet have multiplied, however the tools to check their operation and their availability remain rare. 
+> Your mission is to design a web platform for monitoring IOT modules.
 
 ## On the command line
 
@@ -97,14 +95,13 @@ localhost:3333
 
   * Usecase diagram: 
   
-  ![Usecase diagram]( "Usecase diagram")
+  ![Usecase diagram]( docs/UML/UseCaseDiagram_monitoring_ioc.png "Usecase diagram")
 
   * Class diagram:
-  ![Class diagram]( "Class diagram")
+  ![Class diagram]( docs/UML/ClassDiagram_monitoring_ioc.png "Class diagram")
 
   * Sequence diagram:
-  ![Sequence diagram]( "Sequence diagram")
-  ![Sequence diagram]( "Sequence diagram")
+  ![Sequence diagram]( docs/UML/sequencediagram_monitoring_ioc.png "Sequence diagram")
 
 
   8️⃣ The project is run 🆗 ⭐, good fun 👍 .

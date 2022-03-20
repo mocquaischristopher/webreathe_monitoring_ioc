@@ -1,0 +1,10 @@
+@if(flashMessages.has('success'))
+    <section>
+        {{flashMessages.get('success')}}
+    </section>
+@elseif(flashMessages.has('error'))
+    <section>
+        {{flashMessages.get('error')}}
+    </section>
+@else
+@end

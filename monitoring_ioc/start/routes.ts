@@ -18,8 +18,11 @@
 |
 */
 
-import Route from '@ioc:Adonis/Core/Route'
+import Route from '@ioc:Adonis/Core/Route';
 
-Route.get('/', async ({ view }) => {
-  return view.render('welcome')
-})
+Route.get('/', 'MonitoringController.dashboard').as('home')
+Route.get('/modules/:id','MonitoringController.oneModule').as('modules.show')
+Route.get('/module-form', 'MonitoringController.createModuleForm').as('modules.create')
+Route.post('/form-create','MonitoringController.createModule')
+Route.post('/modules/:id/changeState', 'MonitoringController.changeState')
+Route.post('/modules/:id/deleteModule', 'MonitoringController.deleteModule')

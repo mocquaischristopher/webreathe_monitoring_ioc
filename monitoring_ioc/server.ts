@@ -13,7 +13,19 @@
 import 'reflect-metadata'
 import sourceMapSupport from 'source-map-support'
 import { Ignitor } from '@adonisjs/core/build/standalone'
+// import dataRandom from './automatic_script/dataRandom'
+// import stateRandom from './automatic_script/stateRandom'
 
 sourceMapSupport.install({ handleUncaughtExceptions: false })
 
 new Ignitor(__dirname).httpServer().start()
+
+// dataRandom()
+// dataGenerator Script Automation
+// setInterval(() => {         
+//     dataRandom();
+// }, 60000);
+
+// setInterval(() => {         
+//     stateRandom();
+// }, 60000);
