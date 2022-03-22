@@ -12,6 +12,7 @@ export default class MonitoringController {
         let modulesList = await (Database.from('modules').select('*').orderBy('id', 'asc')) 
         let uptimeList = await (Database.from('modules').select('id', 'active').orderBy('id', 'asc')) 
         let logsList = await (Database.from('logs').select('module_id', 'value', 'updated_at').whereNotNull('value').orderBy('module_id', 'asc'))
+        console.log("logs : ", modulesList)
         let nbValue = await (Database.from('logs').select('module_id').count('value').groupBy('module_id').orderBy('module_id', 'asc')) 
         const typeArray = await Detail.all()
         return view.render('app/home', {modules: modulesList, type: typeArray, nbValue: nbValue, uptimeList:getUptimeList(uptimeList), logsList:logsList})
