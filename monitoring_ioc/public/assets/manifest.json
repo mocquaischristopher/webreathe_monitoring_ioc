@@ -1,5 +1,5 @@
 {
-  "assets/app.css": "/assets/app.3b9a65b6.css",
-  "assets/app.js": "/assets/app.31d6cfe0.js",
-  "assets/images/Webreathe.webp": "/assets/images/Webreathe.c370ea0d.webp"
+  "assets/app.css": "http://localhost:8080/assets/app.css",
+  "assets/app.js": "http://localhost:8080/assets/app.js",
+  "assets/images/Webreathe.webp": "http://localhost:8080/assets/images/Webreathe.c370ea0d.webp"
 }
