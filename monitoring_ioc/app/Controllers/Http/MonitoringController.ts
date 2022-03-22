@@ -5,7 +5,7 @@ import Detail from 'App/Models/Detail';
 import Database from '@ioc:Adonis/Lucid/Database';
 import randValue from 'automatic_script/randomValue';
 import getUptimeList from 'automatic_script/getUptimeList';
-import msToTime from 'automatic_script/msToTime';
+// import msToTime from 'automatic_script/msToTime';
 
 
 export default class MonitoringController {
