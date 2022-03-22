@@ -3,6 +3,9 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Module from 'App/Models/Module'
 import Detail from 'App/Models/Detail';
 import Database from '@ioc:Adonis/Lucid/Database';
+import randValue from 'automatic_script/randomValue';
+import getUptimeList from 'automatic_script/getUptimeList';
+import msToTime from 'automatic_script/msToTime';
 
 
 export default class MonitoringController {
@@ -43,7 +46,7 @@ export default class MonitoringController {
 
     createModule=async({request,response, session}:HttpContextContract)=>{
         let newModule=request.body() 
-        const randomValue = random(+newModule.type);
+        const randomValue = randValue(+newModule.type);
         const newModuleId = await Database
         .table('modules')
         .insert({
@@ -70,7 +73,7 @@ export default class MonitoringController {
 
     changeState = async ({params, response}:HttpContextContract) => {
         let module = await Module.findOrFail(params.id)
-        const randomValue = random(module.type);
+        const randomValue = randValue(module.type);
         await Database
             .from('modules')
             .where('id', module.id)
@@ -99,51 +102,4 @@ export default class MonitoringController {
         session.flash({success: "The module has been deleted"})
         response.redirect().toRoute('home')
     }
-}
-
-function random(type:number) {
-    let value = 0.0;
-    switch(type) {
-        case 1:
-            value = randNb(-10, 50);
-            break;
-        case 2:
-            value = Math.floor(randNb(0, 2000));
-            break;
-        case 3:
-            value = randNb(0, 50);
-            break;
-    }
-    return value;
-}
-function randNb(min, max) {
-    return (Math.random() * (max - min + 1) + min).toFixed(1);
-}
-
-function getUptime(startDate: Date) {
-    const uptime = Date.now()-startDate.getTime();
-    return uptime;
-}
-
-function getUptimeList(startDateList: []) {
-    const uptimeList = [];
-    for (const k of startDateList) {
-        uptimeList.push({
-            id:k.id,
-            active:k.active != null?msToTime(getUptime(k.active)):'not active'
-        })
-    }
-    return uptimeList;
-}
-
-function msToTime(duration) {
-    var seconds = parseInt((duration/1000)%60)
-        , minutes = parseInt((duration/(1000*60))%60)
-        , hours = parseInt((duration/(1000*60*60))%24);
-    
-    hours = (hours < 10) ? "0" + hours : hours;
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
-    seconds = (seconds < 10) ? "0" + seconds : seconds;
-    
-    return hours + " heures " + minutes + " minutes " + seconds + " secondes ";
 }
