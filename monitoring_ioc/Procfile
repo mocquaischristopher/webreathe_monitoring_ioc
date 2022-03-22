@@ -1,2 +1,2 @@
-release: true node ace migration:run --force && node ace db:seed 
+release: true node ace migration:run --force && node build/ace db:seed 
 web: npm run start:prod
