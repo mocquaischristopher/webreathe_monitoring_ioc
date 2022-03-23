@@ -43,7 +43,7 @@ export default class MonitoringController {
 
     createModule=async({request,response, session}:HttpContextContract)=>{
         let newModule=request.body() 
-        const randomValue = randValue(+newModule.type);
+        const randValue = randomValue(+newModule.type);
         const newModuleId = await Database
         .table('modules')
         .insert({
@@ -51,7 +51,7 @@ export default class MonitoringController {
             type: newModule.type,
             location: newModule.location,
             current_state: newModule.state?true:false,
-            current_value: newModule.state?randomValue:null,
+            current_value: newModule.state?randValue:null,
             created_at: DateTime.now(),
             active: DateTime.now()
         }).returning("id")
@@ -60,7 +60,7 @@ export default class MonitoringController {
         .insert({
             module_id: newModuleId[0].id,
             state: newModule.state?true:false,
-            value: newModule.state?randomValue:null,
+            value: newModule.state?randValue:null,
             updated_at: DateTime.now()
         })
 
@@ -70,13 +70,13 @@ export default class MonitoringController {
 
     changeState = async ({params, response}:HttpContextContract) => {
         let module = await Module.findOrFail(params.id)
-        const randomValue = randValue(module.type);
+        const randValue = randomValue(module.type);
         await Database
             .from('modules')
             .where('id', module.id)
             .update({
                 current_state: !module.current_state,
-                current_value: !module.current_state?randomValue:null,
+                current_value: !module.current_state?randValue:null,
                 active: !module.current_state?DateTime.now():undefined
             })
         await Database
@@ -84,7 +84,7 @@ export default class MonitoringController {
             .insert({
                 module_id: module.id,
                 state: !module.current_state,
-                value: !module.current_state?randomValue:null,
+                value: !module.current_state?randValue:null,
                 updated_at: DateTime.now()
             })
         response.redirect(`/modules/${module.id}`) 
