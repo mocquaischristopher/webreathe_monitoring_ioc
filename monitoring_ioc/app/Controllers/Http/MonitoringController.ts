@@ -4,6 +4,10 @@ import Module from 'App/Models/Module'
 import Detail from 'App/Models/Detail';
 import Database from '@ioc:Adonis/Lucid/Database';
 
+interface ModuleTimeInterface{
+    id:number
+    active:string
+}
 
 export default class MonitoringController {
 
@@ -12,7 +16,6 @@ export default class MonitoringController {
         let modulesList = await (Database.from('modules').select('*').orderBy('id', 'asc')) 
         let uptimeList = await (Database.from('modules').select('id', 'active').orderBy('id', 'asc')) 
         let logsList = await (Database.from('logs').select('module_id', 'value', 'updated_at').whereNotNull('value').orderBy('module_id', 'asc'))
-        console.log("logs : ", modulesList)
         let nbValue = await (Database.from('logs').select('module_id').count('value').groupBy('module_id').orderBy('module_id', 'asc')) 
         const typeArray = await Detail.all()
         return view.render('app/home', {modules: modulesList, type: typeArray, nbValue: nbValue, uptimeList:getUptimeList(uptimeList), logsList:logsList})
@@ -121,30 +124,31 @@ function randNb(min, max) {
     return (Math.random() * (max - min + 1) + min).toFixed(1);
 }
 
-function getUptime(startDate: Date) {
-    const uptime = Date.now()-startDate.getTime();
+function getUptime(startDate: string) {
+    const newDate = new Date(startDate)
+    const uptime = newDate.getTime();
     return uptime;
 }
 
-function getUptimeList(startDateList: []) {
-    const uptimeList = [];
+function getUptimeList(startDateList: Module[]) {
+    const uptimeList= [] as ModuleTimeInterface[];
     for (const k of startDateList) {
         uptimeList.push({
             id:k.id,
-            active:k.active != null?msToTime(getUptime(k.active)):'not active'
+            active:k.active != null?msToTime(getUptime(k.active.toString())):'Not active'
         })
     }
     return uptimeList;
 }
 
 function msToTime(duration) {
-    var seconds = parseInt((duration/1000)%60)
-        , minutes = parseInt((duration/(1000*60))%60)
-        , hours = parseInt((duration/(1000*60*60))%24);
+    var seconds = Number((duration/1000)%60)
+        , minutes = Number((duration/(1000*60))%60)
+        , hours = Number((duration/(1000*60*60))%24);
     
-    hours = (hours < 10) ? "0" + hours : hours;
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
-    seconds = (seconds < 10) ? "0" + seconds : seconds;
+    let hour = (hours < 10) ? `0 ${hours}` : String(hours);
+    let minute = (minutes < 10) ? "0" + minutes : minutes;
+    let second = (seconds < 10) ? "0" + seconds : seconds;
     
-    return hours + " heures " + minutes + " minutes " + seconds + " secondes ";
+    return `${hour} + heures + ${minute} + minutes + ${second} + secondes`;
 }
