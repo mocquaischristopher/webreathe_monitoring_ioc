@@ -7,6 +7,7 @@ import Database from '@ioc:Adonis/Lucid/Database';
 interface ModuleTimeInterface{
     id:number
     active:string
+    current_state:boolean
 }
 
 export default class MonitoringController {
@@ -14,7 +15,7 @@ export default class MonitoringController {
 
     dashboard = async ({ view }: HttpContextContract) => {
         let modulesList = await (Database.from('modules').select('*').orderBy('id', 'asc')) 
-        let uptimeList = await (Database.from('modules').select('id', 'active').orderBy('id', 'asc')) 
+        let uptimeList = await (Database.from('modules').select('id', 'active', 'current_state').orderBy('id', 'asc')) 
         let logsList = await (Database.from('logs').select('module_id', 'value', 'updated_at').whereNotNull('value').orderBy('module_id', 'asc'))
         let nbValue = await (Database.from('logs').select('module_id').count('value').groupBy('module_id').orderBy('module_id', 'asc')) 
         const typeArray = await Detail.all()
@@ -27,6 +28,12 @@ export default class MonitoringController {
             .from('logs')
             .where('module_id', module.id).orderBy('updated_at', 'desc')
             )
+        // const logs = await (Database
+        //     .from('logs')
+        //     .where('module_id', module.id).whereNotNull('value').orderBy('updated_at', 'desc')
+        //     )
+        // console.log("list", logs)
+
         const type = await (Database
             .from('details')
             .select('*')
@@ -135,6 +142,7 @@ function getUptimeList(startDateList: Module[]) {
     for (const k of startDateList) {
         uptimeList.push({
             id:k.id,
+            current_state:k.current_state,
             active:k.active != null?msToTime(getUptime(k.active.toString())):'Not active'
         })
     }
@@ -142,13 +150,13 @@ function getUptimeList(startDateList: Module[]) {
 }
 
 function msToTime(duration) {
-    var seconds = Number((duration/1000)%60)
-        , minutes = Number((duration/(1000*60))%60)
-        , hours = Number((duration/(1000*60*60))%24);
+    var seconds = Number(Math.round(duration/1000)%60)
+        , minutes = Number(Math.round(duration/(1000*60))%60)
+        , hours = Number(Math.round(duration/(1000*60*60))%24);
     
-    let hour = (hours < 10) ? `0 ${hours}` : String(hours);
+    let hour = (hours < 10) ? "0" + hours : hours;
     let minute = (minutes < 10) ? "0" + minutes : minutes;
     let second = (seconds < 10) ? "0" + seconds : seconds;
     
-    return `${hour} + heures + ${minute} + minutes + ${second} + secondes`;
+    return `${hour} heures ${minute} minutes ${second} secondes`;
 }

@@ -2,6 +2,36 @@
 
 
 @section('body')
+<script>
+    function graph(updated_at, value) {
+        const canva = document.createElement('canvas');
+        canva.id = chartLine;
+        const labels = label;
+        const data = {
+        labels: updated_at,
+        datasets: [
+            {
+            label: "record value",
+            backgroundColor: "hsl(252, 82.9%, 67.8%)",
+            borderColor: "hsl(252, 82.9%, 67.8%)",
+            data: value,
+            },
+        ],
+        };
+        
+        const configLineChart = {
+            type: "line",
+            data,
+            options: {},
+        };
+        
+        var chartLine = new Chart(
+            document.getElementById(chartLine),
+            configLineChart
+        );
+        return canva;
+    }
+</script>
 
 <section class="flex py-4 justify-around">
     <form action="/modules/{{module.id}}/changeState" method="post">
@@ -44,6 +74,9 @@
                 <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                     Created_at
                 </th>
+                <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase dark:text-gray-400">
+                    Graph
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -76,6 +109,12 @@
                 </td>
                 <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                     {{module.created_at}}
+                </td>
+                <td id='logsList' class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
+                    @each(logs in logsList)
+                            <script>window.addEventListener('load', () => graph(`{{logs.updated_at}}`, `{{logs.value}}`))</script>
+                            <canvas class="p-10" id={{'chartLine' }}></canvas>  
+                    @end
                 </td>
             </tr>
         </tbody>
