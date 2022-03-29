@@ -1,7 +1,7 @@
-import Module from 'App/Models/Module';
-import Database from "@ioc:Adonis/Lucid/Database";
-import { DateTime } from "luxon";
-import randomValue from "./randomValue";
+// import Module from 'App/Models/Module';
+// import Database from "@ioc:Adonis/Lucid/Database";
+// import { DateTime } from "luxon";
+// import randomValue from "./randomValue";
 
 function dataRandom() {
     const modulesIot = Database.from('modules').select('*').orderBy('id', 'asc');
@@ -27,4 +27,4 @@ function dataRandom() {
 })
 }
 
-export default dataRandom;
+// export default dataRandom;
