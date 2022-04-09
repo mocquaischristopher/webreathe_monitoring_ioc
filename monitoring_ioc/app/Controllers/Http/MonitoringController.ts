@@ -4,13 +4,18 @@ import Module from 'App/Models/Module'
 import Detail from 'App/Models/Detail';
 import Database from '@ioc:Adonis/Lucid/Database';
 
+interface ModuleTimeInterface{
+    id:number
+    active:string
+    current_state:boolean
+}
 
 export default class MonitoringController {
 
 
     dashboard = async ({ view }: HttpContextContract) => {
         let modulesList = await (Database.from('modules').select('*').orderBy('id', 'asc')) 
-        let uptimeList = await (Database.from('modules').select('id', 'active').orderBy('id', 'asc')) 
+        let uptimeList = await (Database.from('modules').select('id', 'active', 'current_state').orderBy('id', 'asc')) 
         let logsList = await (Database.from('logs').select('module_id', 'value', 'updated_at').whereNotNull('value').orderBy('module_id', 'asc'))
         let nbValue = await (Database.from('logs').select('module_id').count('value').groupBy('module_id').orderBy('module_id', 'asc')) 
         const typeArray = await Detail.all()
@@ -23,6 +28,12 @@ export default class MonitoringController {
             .from('logs')
             .where('module_id', module.id).orderBy('updated_at', 'desc')
             )
+        // const logs = await (Database
+        //     .from('logs')
+        //     .where('module_id', module.id).whereNotNull('value').orderBy('updated_at', 'desc')
+        //     )
+        // console.log("list", logs)
+
         const type = await (Database
             .from('details')
             .select('*')
@@ -101,17 +112,38 @@ export default class MonitoringController {
     }
 }
 
-function getUptime(startDate: Date) {
-    const uptime = Date.now()-startDate.getTime();
+function random(type:number) {
+    let value = 0.0;
+    switch(type) {
+        case 1:
+            value = randNb(-10, 50);
+            break;
+        case 2:
+            value = Math.floor(randNb(0, 2000));
+            break;
+        case 3:
+            value = randNb(0, 50);
+            break;
+    }
+    return value;
+}
+function randNb(min, max) {
+    return (Math.random() * (max - min + 1) + min).toFixed(1);
+}
+
+function getUptime(startDate: string) {
+    const newDate = new Date(startDate)
+    const uptime = newDate.getTime();
     return uptime;
 }
 
-function getUptimeList(startDateList: []) {
-    const uptimeList = [];
+function getUptimeList(startDateList: Module[]) {
+    const uptimeList= [] as ModuleTimeInterface[];
     for (const k of startDateList) {
         uptimeList.push({
             id:k.id,
-            active:k.active != null?msToTime(getUptime(k.active)):'not active'
+            current_state:k.current_state,
+            active:k.active != null?msToTime(getUptime(k.active.toString())):'Not active'
         })
     }
     return uptimeList;
@@ -138,13 +170,13 @@ async function randomValue(type:number) {
 }
 
 function msToTime(duration) {
-    var seconds = parseInt((duration/1000)%60)
-        , minutes = parseInt((duration/(1000*60))%60)
-        , hours = parseInt((duration/(1000*60*60))%24);
+    var seconds = Number(Math.round(duration/1000)%60)
+        , minutes = Number(Math.round(duration/(1000*60))%60)
+        , hours = Number(Math.round(duration/(1000*60*60))%24);
     
-    hours = (hours < 10) ? "0" + hours : hours;
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
-    seconds = (seconds < 10) ? "0" + seconds : seconds;
+    let hour = (hours < 10) ? "0" + hours : hours;
+    let minute = (minutes < 10) ? "0" + minutes : minutes;
+    let second = (seconds < 10) ? "0" + seconds : seconds;
     
-    return hours + " heures " + minutes + " minutes " + seconds + " secondes ";
+    return `${hour} heures ${minute} minutes ${second} secondes`;
 }
