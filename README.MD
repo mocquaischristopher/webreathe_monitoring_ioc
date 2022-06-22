@@ -111,7 +111,8 @@ localhost:3333
 
 👤 [**MocquaisChristopher**](https://github.com/mocquaischristopher) 
 
-
+## Link of Jira
+https://mocquaischristopher.atlassian.net/jira/software/projects/WM/boards/1/roadmap
 ## Show your support
 
 Give a ⭐️ if this project helped you!
